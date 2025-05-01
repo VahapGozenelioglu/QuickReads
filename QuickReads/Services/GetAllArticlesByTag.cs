@@ -31,7 +31,7 @@ public class GetAllArticlesByTag
             .Select(x => x.ToDto())
             .ToList();
 
-        var resp = allArticles.Select(x => x.Tags.Any( y => y.Name == req.TagName)).ToList();
+        var resp = allArticles.Where(x => x.Tags.Any( y => y.Name == req.TagName)).ToList();
         
         return new Response() { Articles = resp };
     }
