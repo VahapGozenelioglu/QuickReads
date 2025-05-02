@@ -23,6 +23,7 @@ public static class MappingExtensions
             PublishedDate = article.PublishedDate,
             Language = article.Language,
             Tags = article.Tags.Select(tag => tag.ToDto()).ToList(),
+            ShortContent = article.ShortContent
         };
     }
     

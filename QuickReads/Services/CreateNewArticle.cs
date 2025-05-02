@@ -55,6 +55,7 @@ public class CreateNewArticle
             WordCount = 0,
             ReadTimeInMinute = 0,
             PublishedDate = req.PublishedDate ?? DateTime.UtcNow,
+            ShortContent = req.Content.Length > 100 ? req.Content.Substring(0, 100) : req.Content
         };
         return tag;
     }
