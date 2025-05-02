@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using QuickReads.Contexts;
+using QuickReads.Entities.Enums;
 using QuickReads.Services;
 
 namespace QuickReads.Controllers;
@@ -29,6 +30,33 @@ public class ArticleController : ControllerBase
     {
         var svc = new GetArticleById(_context);
         var resp = svc.Invoke(new GetArticleById.Request() { Id = id });
+        return Ok(resp);
+    }
+    
+    [HttpGet]
+    [Route("GetAllArticlesByTag")]
+    public IActionResult GetAllArticlesByTag(string tagName)
+    {
+        var svc = new GetAllArticlesByTag(_context);
+        var resp = svc.Invoke(new GetAllArticlesByTag.Request() { TagName = tagName });
+        return Ok(resp);
+    }
+    
+    [HttpGet]
+    [Route("GetAllArticlesByLanguage")]
+    public IActionResult GetAllArticlesByLanguage(LanguageEnum language)
+    {
+        var svc = new GetAllArticlesByLanguage(_context);
+        var resp = svc.Invoke(new GetAllArticlesByLanguage.Request() { Language = language });
+        return Ok(resp);
+    }
+    
+    [HttpPost]
+    [Route("CreateNewArticle")]
+    public IActionResult CreateNewArticle([FromBody] ArticleDto req)
+    {
+        var svc = new CreateNewArticle(_context);
+        var resp = svc.Invoke(req);
         return Ok(resp);
     }
 }
