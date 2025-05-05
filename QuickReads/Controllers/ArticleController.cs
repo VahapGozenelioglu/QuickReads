@@ -68,4 +68,13 @@ public class ArticleController : ControllerBase
         var resp = svc.Invoke(req);
         return Ok(resp);
     }
+    
+    [HttpPost]
+    [Route("LikeArticle")]
+    public IActionResult LikeArticle([FromBody] LikeArticle.AssocDto req)
+    {
+        var svc = new LikeArticle(_context);
+        var resp = svc.Invoke(req);
+        return Ok(resp);
+    }
 }

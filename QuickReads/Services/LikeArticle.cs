@@ -1,0 +1,64 @@
+
+using Microsoft.EntityFrameworkCore;
+using QuickReads.Contexts;
+using QuickReads.Entities;
+
+namespace QuickReads.Services;
+
+public class LikeArticle
+{
+    private static ApplicationDbContext _context;
+
+    public class AssocDto
+    {
+        public int ArticleId { get; set; }
+        public int UserId { get; set; }
+    }
+    
+    public class Response
+    {
+    }
+
+    public LikeArticle(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+    public Response Invoke(AssocDto req)
+    {
+        var tagIds = _context.ArticleTagAssocs
+            .Where(x => x.ArticleId == req.ArticleId)
+            .Select(x => x.TagId)
+            .ToList();
+        
+        var userTagAssocs = _context.UserTagAssocs
+            .Where(x => x.UserId == req.UserId)
+            .Select(x => x.TagId)
+            .ToList();
+        
+        var commonTagIds = tagIds.Intersect(userTagAssocs).ToList();
+
+        var commonTags = _context.UserTagAssocs
+            .Where(x => commonTagIds.Contains(x.TagId))
+            .ToList();
+        commonTags.ForEach(x => x.LikeCount++);
+        
+        _context.UpdateRange(commonTags);
+        _context.SaveChanges();
+        
+        var newTagAssocs = tagIds.Except(userTagAssocs).ToList();
+        foreach (var tagId in newTagAssocs)
+        {
+            var newUserTagAssoc = new UserTagAssoc
+            {
+                UserId = req.UserId,
+                TagId = tagId,
+                LikeCount = 1
+            };
+            _context.UserTagAssocs.Add(newUserTagAssoc);
+        }
+        
+        _context.SaveChanges();
+
+        return new Response() { };
+    }
+}
