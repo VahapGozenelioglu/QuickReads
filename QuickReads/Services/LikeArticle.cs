@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using QuickReads.Contexts;
 using QuickReads.Entities;
+using QuickReads.Entities.DTOs;
 
 namespace QuickReads.Services;
 
@@ -9,11 +10,6 @@ public class LikeArticle
 {
     private static ApplicationDbContext _context;
 
-    public class AssocDto
-    {
-        public int ArticleId { get; set; }
-        public int UserId { get; set; }
-    }
     
     public class Response
     {
@@ -23,7 +19,7 @@ public class LikeArticle
     {
         _context = context;
     }
-    public Response Invoke(AssocDto req)
+    public Response Invoke(ArticleUserDto req)
     {
         var tagIds = _context.ArticleTagAssocs
             .Where(x => x.ArticleId == req.ArticleId)

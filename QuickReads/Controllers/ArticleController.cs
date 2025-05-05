@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using QuickReads.Contexts;
+using QuickReads.Entities.DTOs;
 using QuickReads.Entities.Enums;
 using QuickReads.Services;
 
@@ -71,9 +72,18 @@ public class ArticleController : ControllerBase
     
     [HttpPost]
     [Route("LikeArticle")]
-    public IActionResult LikeArticle([FromBody] LikeArticle.AssocDto req)
+    public IActionResult LikeArticle([FromBody] ArticleUserDto req)
     {
         var svc = new LikeArticle(_context);
+        var resp = svc.Invoke(req);
+        return Ok(resp);
+    }
+    
+    [HttpPost]
+    [Route("UndoLikeArticle")]
+    public IActionResult UndoLikeArticle([FromBody] ArticleUserDto req)
+    {
+        var svc = new UndoLikeArticle(_context);
         var resp = svc.Invoke(req);
         return Ok(resp);
     }
