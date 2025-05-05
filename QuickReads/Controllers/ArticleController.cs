@@ -87,4 +87,13 @@ public class ArticleController : ControllerBase
         var resp = svc.Invoke(req);
         return Ok(resp);
     }
+    
+    [HttpGet]
+    [Route("SuggestRandomArticlesForUser")]
+    public IActionResult SuggestRandomArticlesForUser(int userId)
+    {
+        var svc = new SuggestRandomArticlesForUser(_context);
+        var resp = svc.Invoke(new SuggestRandomArticlesForUser.Request(){UserId = userId});
+        return Ok(resp);
+    }
 }
