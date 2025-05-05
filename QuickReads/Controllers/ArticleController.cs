@@ -25,6 +25,15 @@ public class ArticleController : ControllerBase
     }
     
     [HttpGet]
+    [Route("GetRandomArticles")]
+    public IActionResult GetRandomArticles(int? articleCount)
+    {
+        var svc = new GetRandomArticles(_context);
+        var resp = svc.Invoke(new GetRandomArticles.Request() {ArticleCount = articleCount});
+        return Ok(resp);
+    }
+    
+    [HttpGet]
     [Route("GetArticleById/{id}")]
     public IActionResult GetArticleById(int id)
     {
