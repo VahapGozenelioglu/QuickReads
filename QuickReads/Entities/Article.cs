@@ -14,6 +14,6 @@ public class Article : BaseEntity
     public int ReadTimeInMinute { get; set; }
     public DateTime PublishedDate { get; set; }
     public LanguageEnum Language { get; set; }
-    public List<Tag> Tags { get; set; }
+    public List<ArticleTagAssoc> ArticleTagAssocs { get; set; }
     public List<CategoryEnum> Categories { get; set; }
 }

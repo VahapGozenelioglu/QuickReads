@@ -21,7 +21,8 @@ public class GetAllArticles
     public Response Invoke(Request req)
     {
         var articles = _context.Articles
-            .Include(x => x.Tags)
+            .Include(x => x.ArticleTagAssocs)
+            .ThenInclude(x => x.Tag)
             .Select(x => x.ToDto())
             .ToList();
         

@@ -2,7 +2,7 @@ using QuickReads.Entities.DTOs;
 using QuickReads.Entities.Enums;
 
 
-public class ArticleDto
+public class ArticleBaseDto
 {
     public int Id { get; set; }
     public DateTime? CreatedAt { get; set; }
@@ -18,6 +18,15 @@ public class ArticleDto
     public int ReadTimeInMinute { get; set; }
     public DateTime? PublishedDate { get; set; }
     public LanguageEnum Language { get; set; }
-    public List<TagDto> Tags { get; set; }
     public List<CategoryEnum> Categories { get; set; }
+}
+
+public class ArticleDto : ArticleBaseDto
+{
+    public List<TagDto> Tags { get; set; }
+}
+
+public class ArticleCreateDto : ArticleBaseDto
+{
+    public List<string> TagNames { get; set; }
 }

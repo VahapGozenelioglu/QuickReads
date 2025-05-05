@@ -14,6 +14,7 @@ public class BulkImportTags
 
     public class Response
     {
+        public List<Tag> Tags { get; set; }
     }
 
     public BulkImportTags(ApplicationDbContext context)
@@ -23,25 +24,27 @@ public class BulkImportTags
     
     public Response Invoke(Request req)
     {
-        var existingTags = _context.Tags
+        var existingTagEntities = _context.Tags
             .Where(x => req.TagNames.Contains(x.Name))
-            .Select(x => x.Name)
             .ToList();
-        
+
+        var existingTagNames = existingTagEntities.Select(x => x.Name).ToHashSet();
+
         var newTags = req.TagNames
-            .Where(x => !existingTags.Contains(x))
-            .ToList();
-            
-        var tags = newTags.Select(tagName => new Tag()
-        {
-            Name = tagName,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
-        }).ToList();
-        
-        _context.Tags.AddRange(tags);
+            .Where(x => !existingTagNames.Contains(x))
+            .Select(tagName => new Tag
+            {
+                Name = tagName,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            }).ToList();
+
+        _context.Tags.AddRange(newTags);
         _context.SaveChanges();
-        
-        return new Response() { };
+
+        var allTags = existingTagEntities.Concat(newTags).ToList();
+
+        return new Response { Tags = allTags };
     }
+
 }

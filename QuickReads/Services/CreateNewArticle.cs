@@ -16,28 +16,38 @@ public class CreateNewArticle
     {
         _context = context;
     }
-    public Response Invoke(ArticleDto req)
+    public Response Invoke(ArticleCreateDto req)
     {
         var article = InitializeFields(req);
         
         CalculateReadTime(req, article);
 
         var svc = new BulkImportTags(_context);
-        svc.Invoke( new BulkImportTags.Request(){TagNames = req.Tags.Select(x => x.Name).ToList()});
+        var tags = svc.Invoke( new BulkImportTags.Request(){TagNames = req.TagNames});
+        article.ArticleTagAssocs = new ();
         
         _context.Articles.Add(article);
+        _context.SaveChanges();
+        
+        article.ArticleTagAssocs.AddRange(tags.Tags.Select(tag => new ArticleTagAssoc()
+        {
+            TagId = tag.Id,
+            ArticleId = article.Id,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        }));
         _context.SaveChanges();
         
         return new Response() { };
     }
 
-    private static void CalculateReadTime(ArticleDto req, Article article)
+    private static void CalculateReadTime(ArticleCreateDto req, Article article)
     {
         article.WordCount = req.Content?.Split(' ').Length ?? 0;
         article.ReadTimeInMinute = (int)Math.Ceiling((double)article.WordCount / 200);
     }
 
-    private static Article InitializeFields(ArticleDto req)
+    private static Article InitializeFields(ArticleCreateDto req)
     {
         var tag = new Article()
         {
@@ -49,13 +59,13 @@ public class CreateNewArticle
             IsDeleted = false,
             Author = req.Author,
             Categories = req.Categories,
-            Tags = new(),
+            ArticleTagAssocs = new(),
             CopyrightDetail = req.CopyrightDetail,
             ImageUrl = req.ImageUrl,
             WordCount = 0,
             ReadTimeInMinute = 0,
             PublishedDate = req.PublishedDate ?? DateTime.UtcNow,
-            ShortContent = req.Content.Length > 100 ? req.Content.Substring(0, 100) : req.Content
+            ShortContent = req.Content.Length > 10 ? req.Content.Substring(0, 10) : req.Content
         };
         return tag;
     }

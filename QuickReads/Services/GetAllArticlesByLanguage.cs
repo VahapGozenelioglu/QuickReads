@@ -27,7 +27,8 @@ public class GetAllArticlesByLanguage
     public Response Invoke(Request req)
     {
         var articles = _context.Articles
-            .Include(x => x.Tags)
+            .Include(x => x.ArticleTagAssocs)
+            .ThenInclude(x => x.Tag)
             .Where(x => x.Language == req.Language)
             .Select(x => x.ToDto())
             .ToList();

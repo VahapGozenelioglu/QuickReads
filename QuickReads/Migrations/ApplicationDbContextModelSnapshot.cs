@@ -84,7 +84,7 @@ namespace QuickReads.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("QuickReads.Entities.Tag", b =>
+            modelBuilder.Entity("QuickReads.Entities.ArticleTagAssoc", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,8 +92,37 @@ namespace QuickReads.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ArticleId")
+                    b.Property<int>("ArticleId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("ArticleTagAssocs");
+                });
+
+            modelBuilder.Entity("QuickReads.Entities.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -110,21 +139,36 @@ namespace QuickReads.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArticleId");
-
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("QuickReads.Entities.Tag", b =>
+            modelBuilder.Entity("QuickReads.Entities.ArticleTagAssoc", b =>
                 {
-                    b.HasOne("QuickReads.Entities.Article", null)
-                        .WithMany("Tags")
-                        .HasForeignKey("ArticleId");
+                    b.HasOne("QuickReads.Entities.Article", "Article")
+                        .WithMany("ArticleTagAssocs")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuickReads.Entities.Tag", "Tag")
+                        .WithMany("ArticleTagAssocs")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("QuickReads.Entities.Article", b =>
                 {
-                    b.Navigation("Tags");
+                    b.Navigation("ArticleTagAssocs");
+                });
+
+            modelBuilder.Entity("QuickReads.Entities.Tag", b =>
+                {
+                    b.Navigation("ArticleTagAssocs");
                 });
 #pragma warning restore 612, 618
         }

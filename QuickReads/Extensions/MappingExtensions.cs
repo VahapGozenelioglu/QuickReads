@@ -22,7 +22,7 @@ public static class MappingExtensions
             ReadTimeInMinute = article.ReadTimeInMinute,
             PublishedDate = article.PublishedDate,
             Language = article.Language,
-            Tags = article.Tags.Select(tag => tag.ToDto()).ToList(),
+            Tags = article.ArticleTagAssocs.Select(assoc =>  assoc.Tag.ToDto()).ToList(),
             ShortContent = article.ShortContent
         };
     }

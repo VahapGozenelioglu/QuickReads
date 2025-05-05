@@ -11,4 +11,5 @@ public class ApplicationDbContext : DbContext
     
     public DbSet<Article> Articles { get; set; }
     public DbSet<Tag> Tags { get; set; }
+    public DbSet<ArticleTagAssoc> ArticleTagAssocs { get; set; }
 }

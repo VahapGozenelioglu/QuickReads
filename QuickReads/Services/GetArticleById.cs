@@ -26,7 +26,8 @@ public class GetArticleById
     public Response Invoke(Request req)
     {
         var article = _context.Articles
-            .Include(x => x.Tags)
+            .Include(x => x.ArticleTagAssocs)
+            .ThenInclude(x => x.Tag)
             .FirstOrDefault(article => article.Id == req.Id)
             ?.ToDto();
         

@@ -53,7 +53,7 @@ public class ArticleController : ControllerBase
     
     [HttpPost]
     [Route("CreateNewArticle")]
-    public IActionResult CreateNewArticle([FromBody] ArticleDto req)
+    public IActionResult CreateNewArticle([FromBody] ArticleCreateDto req)
     {
         var svc = new CreateNewArticle(_context);
         var resp = svc.Invoke(req);
