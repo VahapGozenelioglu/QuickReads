@@ -96,4 +96,22 @@ public class ArticleController : ControllerBase
         var resp = svc.Invoke(new SuggestRandomArticlesForUser.Request(){UserId = userId});
         return Ok(resp);
     }
+    
+    [HttpPost]
+    [Route("AddArticleToBookmarks")]
+    public IActionResult AddArticleToBookmarks([FromBody] ArticleUserDto req)
+    {
+        var svc = new AddArticleToBookmarks(_context);
+        var resp = svc.Invoke(req);
+        return Ok(resp);
+    }
+    
+    [HttpPost]
+    [Route("RemoveArticleFromBookmarks")]
+    public IActionResult RemoveArticleFromBookmarks([FromBody] ArticleUserDto req)
+    {
+        var svc = new RemoveArticleFromBookmarks(_context);
+        var resp = svc.Invoke(req);
+        return Ok(resp);
+    }
 }

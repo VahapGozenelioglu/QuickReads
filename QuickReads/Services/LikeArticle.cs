@@ -36,7 +36,11 @@ public class LikeArticle
         var commonTags = _context.UserTagAssocs
             .Where(x => commonTagIds.Contains(x.TagId))
             .ToList();
-        commonTags.ForEach(x => x.LikeCount++);
+        commonTags.ForEach(x =>
+        {
+            x.LikeCount++;
+            x.UpdatedAt = DateTime.Now;
+        });
         
         _context.UpdateRange(commonTags);
         _context.SaveChanges();
@@ -48,7 +52,9 @@ public class LikeArticle
             {
                 UserId = req.UserId,
                 TagId = tagId,
-                LikeCount = 1
+                LikeCount = 1,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
             };
             _context.UserTagAssocs.Add(newUserTagAssoc);
         }
