@@ -14,4 +14,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<ArticleTagAssoc> ArticleTagAssocs { get; set; }
     public DbSet<UserTagAssoc> UserTagAssocs { get; set; }
     public DbSet<Bookmark> Bookmarks { get; set; }
+
+    public DbSet<UserEntity> Users { get; set; }
 }

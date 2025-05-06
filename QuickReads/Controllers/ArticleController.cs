@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuickReads.Contexts;
 using QuickReads.Entities.DTOs;
@@ -17,6 +18,7 @@ public class ArticleController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize]
     [Route("GetAllArticles")]
     public IActionResult GetAllArticles()
     {
@@ -26,6 +28,7 @@ public class ArticleController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize]
     [Route("GetRandomArticles")]
     public IActionResult GetRandomArticles(int? articleCount)
     {
@@ -35,6 +38,7 @@ public class ArticleController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize]
     [Route("GetArticleById/{id}")]
     public IActionResult GetArticleById(int id)
     {
@@ -44,6 +48,7 @@ public class ArticleController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize]
     [Route("GetAllArticlesByTag")]
     public IActionResult GetAllArticlesByTag(string tagName)
     {
@@ -53,6 +58,7 @@ public class ArticleController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize]
     [Route("GetAllArticlesByLanguage")]
     public IActionResult GetAllArticlesByLanguage(LanguageEnum language)
     {
@@ -62,6 +68,7 @@ public class ArticleController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize]
     [Route("CreateNewArticle")]
     public IActionResult CreateNewArticle([FromBody] ArticleCreateDto req)
     {
@@ -71,6 +78,7 @@ public class ArticleController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize]
     [Route("LikeArticle")]
     public IActionResult LikeArticle([FromBody] ArticleUserDto req)
     {
@@ -80,6 +88,7 @@ public class ArticleController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize]
     [Route("UndoLikeArticle")]
     public IActionResult UndoLikeArticle([FromBody] ArticleUserDto req)
     {
@@ -89,6 +98,7 @@ public class ArticleController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize]
     [Route("SuggestRandomArticlesForUser")]
     public IActionResult SuggestRandomArticlesForUser(int userId)
     {
@@ -98,6 +108,7 @@ public class ArticleController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize]
     [Route("AddArticleToBookmarks")]
     public IActionResult AddArticleToBookmarks([FromBody] ArticleUserDto req)
     {
@@ -107,6 +118,7 @@ public class ArticleController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize]
     [Route("RemoveArticleFromBookmarks")]
     public IActionResult RemoveArticleFromBookmarks([FromBody] ArticleUserDto req)
     {
