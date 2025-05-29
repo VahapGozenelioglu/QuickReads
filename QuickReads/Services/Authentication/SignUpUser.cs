@@ -25,7 +25,7 @@ public class SignUpUser
         _config = config;
     }
     
-    public Response Invoke(UserLoginDto req)
+    public Response Invoke(UserSignUpDto req)
     {
         var user = _context.Users
             .FirstOrDefault(x => x.Email == req.Email);

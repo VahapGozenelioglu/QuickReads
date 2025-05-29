@@ -19,7 +19,7 @@ public class AuthController : ControllerBase
     }
     
     [HttpPost("signup")]
-    public IActionResult Register([FromBody] UserLoginDto newUser)
+    public IActionResult Register([FromBody] UserSignUpDto newUser)
     {
         var resp = new SignUpUser(_context, _config).Invoke(newUser);
 
