@@ -13,10 +13,12 @@ public class LoginUser
     private static ApplicationDbContext _context;
     private readonly IConfiguration _config;
 
-    public class Response
+    public class AuthData
     {
-        public bool Succeed { get; set; }
+        public bool Success { get; set; }
         public string Token { get; set; }
+        public string Expiration { get; set; }
+        public UserLoginDto? User { get; set; }
     }
 
     public LoginUser(ApplicationDbContext context, IConfiguration config)
@@ -25,29 +27,53 @@ public class LoginUser
         _config = config;
     }
     
-    public Response Invoke(UserLoginDto req)
+    public AuthData Invoke(UserLoginDto req)
     {
         var user = _context.Users
             .FirstOrDefault(x => x.Email == req.Email);
         
         if (user == null)
         {
-            return new Response { Succeed = false, Token = string.Empty };
+            return new AuthData()
+            {
+                Success = false,
+                Token = string.Empty,
+                Expiration = string.Empty,
+                User = null
+            };
         }
         
         bool isValid = BCrypt.Net.BCrypt.Verify(req.Password, user?.Password); 
         
         if (!isValid)
         {
-            return new Response { Succeed = false, Token = string.Empty };
+            return new AuthData()
+            {
+                Success = false,
+                Token = string.Empty,
+                Expiration = string.Empty,
+                User = null
+            };
         }
         
         var token = GenerateJwtToken(user.Email);
         
-        return new Response
+        
+        var jwtSettings = _config.GetSection("JwtSettings");
+        
+        return new AuthData()
         {
-            Succeed = true,
-            Token = token
+            Success = true,
+            Token = token,
+            Expiration = DateTime.UtcNow.AddMinutes(double.Parse(jwtSettings["ExpireTime"] ?? string.Empty)).ToString(),
+            User = new UserLoginDto
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Password = "Password is not returned for security reasons",
+                Id = user.Id
+            }
         };
     }
     

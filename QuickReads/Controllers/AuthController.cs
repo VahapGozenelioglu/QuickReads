@@ -23,9 +23,9 @@ public class AuthController : ControllerBase
     {
         var resp = new SignUpUser(_context, _config).Invoke(newUser);
 
-        if (resp.Succeed)
+        if (resp.Success)
         {
-            return Ok(new { resp.Token });
+            return Ok(resp);
         }
         
         return Unauthorized("Kullanıcı zaten kayıtlı!");
@@ -36,9 +36,9 @@ public class AuthController : ControllerBase
     {
         var resp = new LoginUser(_context, _config).Invoke(loginUser);
 
-        if (resp.Succeed)
+        if (resp.Success)
         {
-            return Ok(new { resp.Token });
+            return Ok(resp);
         }
         
         return Unauthorized("Geçersiz e-posta veya şifre");
