@@ -47,7 +47,7 @@ namespace QuickReads.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -60,7 +60,7 @@ namespace QuickReads.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("PublishedDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("ReadTimeInMinute")
                         .HasColumnType("integer");
@@ -74,14 +74,14 @@ namespace QuickReads.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("WordCount")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Articles", (string)null);
                 });
 
             modelBuilder.Entity("QuickReads.Entities.ArticleTagAssoc", b =>
@@ -96,7 +96,7 @@ namespace QuickReads.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
@@ -105,7 +105,7 @@ namespace QuickReads.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -113,7 +113,7 @@ namespace QuickReads.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("ArticleTagAssocs");
+                    b.ToTable("ArticleTagAssocs", (string)null);
                 });
 
             modelBuilder.Entity("QuickReads.Entities.Bookmark", b =>
@@ -128,13 +128,13 @@ namespace QuickReads.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("UserEntityId")
                         .HasColumnType("integer");
@@ -148,7 +148,7 @@ namespace QuickReads.Migrations
 
                     b.HasIndex("UserEntityId");
 
-                    b.ToTable("Bookmarks");
+                    b.ToTable("Bookmarks", (string)null);
                 });
 
             modelBuilder.Entity("QuickReads.Entities.Tag", b =>
@@ -160,7 +160,7 @@ namespace QuickReads.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
@@ -170,11 +170,11 @@ namespace QuickReads.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("QuickReads.Entities.UserEntity", b =>
@@ -186,7 +186,7 @@ namespace QuickReads.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -208,11 +208,11 @@ namespace QuickReads.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("QuickReads.Entities.UserTagAssoc", b =>
@@ -224,7 +224,7 @@ namespace QuickReads.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
@@ -236,7 +236,7 @@ namespace QuickReads.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -247,7 +247,7 @@ namespace QuickReads.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserTagAssocs");
+                    b.ToTable("UserTagAssocs", (string)null);
                 });
 
             modelBuilder.Entity("QuickReads.Entities.ArticleTagAssoc", b =>

@@ -32,7 +32,9 @@ public class AddArticleToBookmarks
             UserId = req.UserId,
             ArticleId = req.ArticleId,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserEntity = null,
+            Article = null
         };
         
         _context.Bookmarks.Add(bookmark);

@@ -71,8 +71,7 @@ public class LoginUser
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Password = "Password is not returned for security reasons",
-                Id = user.Id
+                Password = "Password is not returned for security reasons"
             }
         };
     }

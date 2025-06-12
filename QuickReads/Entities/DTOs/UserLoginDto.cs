@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QuickReads.Entities.DTOs;
 
-public class UserDto : BaseEntity
+public class UserDto
 {
     [Required]public string Email { get; set; }
     [Required]public string Password { get; set; }
